@@ -148,8 +148,161 @@ function loopForever(): never {
 
 function logMessage(message:string):void{
 
-    console.log(message);
+  console.log(message);
 
 }
 
 logMessage("Hello India")
+
+
+
+//Type Inference
+// Type inference is a feature in TypeScript where the compiler automatically determines 
+//the type of a variable based on the value assigned to it, without the need for explicit type annotations.
+
+//example
+let count = 10; 
+
+
+//Type Assertion
+// Type assertion is a mechanism in TypeScript that allows developers to explicitly specify a type for a value when they have more knowledge about the value’s type than the compiler does. It does not perform type checking or data conversion; it simply tells the compiler to treat the value as a specified type.
+
+let val: any = "Hello";
+let strLength: number = (val as string).length;
+
+//union type
+//union type  type allows a variable to hold more than one possible type 
+//that its data type can be any of the provided
+
+let unionVal: string | number ; //can be assigned string or number 
+
+unionVal=898965
+//Type Narrowing
+//Type narrowing is the process where TypeScript reduces a union 
+//type to a more specific type based on runtime checks (like typeof, instanceof, or checking properties).
+
+function printLength(value: string | number) {
+  if (typeof value === "string") {
+    // TypeScript knows value is string here
+    console.log("Length:", value.length);
+  } else {
+    // TypeScript knows value is number here
+    console.log("Fixed:", value.toFixed(2));    //to fixed defined no of digits after decimal 
+  }
+}
+
+printLength(unionVal)
+
+
+//Inerface
+//An interface in TypeScript is like a contract or blueprint for an object.
+// It defines what properties and methods an object should have — but not how they work.
+
+interface Person{
+
+  name:string,
+  //function
+  sayHii():void,
+  //property using function
+  // sayHii : ()=> void 
+}
+
+//inhertis all the properties from person
+interface Account extends Person{
+  branch : string,
+  balance:number,
+  // "?" indicates that email is optional its string if defined in object else undefined
+  email? :string 
+}
+
+
+
+
+function sayHii(){
+  console.log("Hii!")
+}
+
+
+let person:Account={
+  name:"Umair Khan",
+  //defining  function 
+  sayHii(){
+console.log("sayHii")
+  },
+  branch:"Mumbai",
+  balance:56000
+  //defining funtion property 
+  // sayHii
+}
+
+person.sayHii();
+
+// interface with function type
+interface MathOp{
+  //defining a function type with parameter type
+  (a : number, b : number) : number
+}
+
+
+const addRes:MathOp = (x,y)=>x+y;
+console.log("interface with function type ", addRes(5,6));
+
+
+
+
+//A Type Alias in TypeScript is a feature that allows you to create a custom name (alias) for a type.
+// It can be used to name primitive types, object types, union types, function types, etc.,
+//  to make your code more readable, reusable, and manageable.
+
+//type using numnber
+type USERID = number;
+let id : USERID = 895;
+
+//union " | "" Type
+type Id = string | number;
+
+let orderId:Id=65566;
+let itemId :string ="ELEC-660";
+
+
+
+//type using object
+type School = {
+  address:string,
+   fees:number 
+}
+
+// we can inherit the one type properties in to other type properties using Intersection '&' 
+type student= School &{
+  name:"Uk",
+  address:"Mumbai",
+  fees:8952
+} 
+
+
+type status = "active" | "Inactive" | "pending"
+let userStatus :status = "Inactive";
+
+
+type Tree = {
+  value:string,
+  children : Tree[]
+}
+
+let defineTree={
+  value:"GrandFather",
+  children:[{
+    value:"Father",
+    children:[{
+      value:"Son"
+    }]
+  }]
+}
+
+
+// defining a function type with parameter type for Alias Type
+type addNum = {(num1:number, num2:number):number}
+
+let addNumRes:addNum =(x,y)=>x+y
+console.log("Function type with parameter type for Alias Type ",addNumRes(96,35));
+
